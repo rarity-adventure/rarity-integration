@@ -27,9 +27,14 @@ contract rarity_library {
 
     function description(uint _s) public view returns (string memory full_name) {
         (,,uint class, uint level) = _rm.summoner(_s);
-        full_name = string(abi.encodePacked(
-                _names.summoner_name(_s), ", Level ", level.toString(), " ", _rm.classes(class)
-            ));
+        full_name = string(abi.encodePacked("Level ", level.toString(), " ", _rm.classes(class)));
+
+        string memory _name = name(_s);
+        if (bytes(_name).length > 0) {
+            full_name = string(abi.encodePacked(_name, ", ", full_name));
+        } else {
+            full_name = string(abi.encodePacked("Unnamed ", full_name));
+        }
     }
 
     function ability_scores(uint _s) public view returns (rl._ability_scores memory scores) {
@@ -72,7 +77,8 @@ contract rarity_library {
         rl._ability_modifiers memory modifiers = ability_modifiers(_s);
         uint total_points = _attr.abilities_by_level(_rm.level(_s)) + 32;
         uint spent_points = _pb(scores._str) + _pb(scores._dex) + _pb(scores._con) + _pb(scores._int) + _pb(scores._wis) + _pb(scores._cha);
-        scores_full = rl._ability_scores_full(scores, modifiers, total_points, spent_points);
+        bool character_created = _attr.character_created(_s);
+        scores_full = rl._ability_scores_full(scores, modifiers, total_points, spent_points, character_created);
     }
 
 
@@ -82,8 +88,13 @@ contract rarity_library {
         rl._ability_modifiers memory mod = ability_modifiers(_s);
         (,, uint _class, uint _level) = _rm.summoner(_s);
         bool[36] memory _class_skills = _skills.class_skills(_class);
-        uint _total_points = _skills.skills_per_level(mod._int, _class, _level);
-        uint _spent_points = _skills.calculate_points_for_set(_class, _current_skills);
+        uint _total_points;
+        uint _spent_points;
+        if (mod._int > -5) {
+            // This will underflow for summoners with -5 int mod or less
+            _total_points = _skills.skills_per_level(mod._int, _class, _level);
+            _spent_points = _skills.calculate_points_for_set(_class, _current_skills);
+        }
         s = rl._skills(
             _current_skills,
             _class_skills,
@@ -121,7 +132,7 @@ contract rarity_library {
         mats[0] = rl._material(_mat1.balanceOf(_s), _mat1.scout(_s));
     }
 
-    function full_summoner(uint _s) public view returns (rl._summoner memory s) {
+    function summoner_full(uint _s) public view returns (rl._summoner memory s) {
         s = rl._summoner(
             base(_s),
             ability_scores_full(_s),
@@ -129,6 +140,13 @@ contract rarity_library {
             gold(_s),
             materials(_s)
         );
+    }
+
+    function summoners_full(uint[] calldata _s) public view returns (rl._summoner[] memory s) {
+        s = new rl._summoner[](_s.length);
+        for (uint i = 0; i < _s.length; i++) {
+            s[i] = summoner_full(_s[i]);
+        }
     }
 
     function items1(address _owner) public view returns (rl._item1[] memory items){

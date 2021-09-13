@@ -13,6 +13,7 @@ interface rarity_manifested is IERC721 {
 interface rarity_attributes {
     function ability_scores(uint _summoner) external view returns (uint32, uint32, uint32, uint32, uint32, uint32);
     function abilities_by_level(uint _level) external view returns (uint);
+    function character_created(uint _summoner) external view returns (bool);
 }
 
 interface rarity_skills {

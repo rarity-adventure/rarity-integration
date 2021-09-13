@@ -33,6 +33,7 @@ library rl {
         _ability_modifiers modifiers;
         uint total_points;
         uint spent_points;
+        bool created;
     }
 
     struct _skills {
