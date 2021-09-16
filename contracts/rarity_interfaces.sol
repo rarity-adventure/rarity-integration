@@ -19,11 +19,17 @@ interface rarity_lib {
     function items1(address _owner) external view returns (rl._item1[] memory);
 }
 
-interface rarity_manifested is IERC721 {
+interface adventurable {
+    function adventure(uint _summoner) external;
+    function adventurers_log(uint _summoner) external view returns(uint);
+}
+
+interface rarity_manifested is IERC721, adventurable {
     function summoner(uint _summoner) external view returns (uint _xp, uint _log, uint _class, uint _level);
     function level(uint) external view returns (uint);
     function class(uint) external view returns (uint);
     function classes(uint) external pure returns (string memory);
+    function level_up(uint _summoner) external;
 }
 
 interface rarity_attributes {
@@ -59,7 +65,7 @@ interface rarity_gold is rarity_fungible {
     function claimed(uint _summoner) external view returns (uint);
 }
 
-interface rarity_mat1 is rarity_fungible {
+interface rarity_mat1 is rarity_fungible, adventurable {
     function scout(uint _summoner) external view returns (uint reward);
 }
 

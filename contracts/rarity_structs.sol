@@ -52,6 +52,7 @@ library rl {
     struct _material {
         uint balance;
         uint scout;
+        uint log;
     }
 
     struct _summoner {

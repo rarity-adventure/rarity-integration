@@ -128,7 +128,7 @@ contract rarity_library {
 
     function materials(uint _s) public view returns (rl._material[] memory mats) {
         mats = new rl._material[](1);
-        mats[0] = rl._material(_mat1.balanceOf(_s), _mat1.scout(_s));
+        mats[0] = rl._material(_mat1.balanceOf(_s), _mat1.scout(_s), _mat1.adventurers_log(_s));
     }
 
     function summoner_full(uint _s) public view returns (rl._summoner memory s) {
