@@ -133,7 +133,7 @@ contract rarity_library {
     }
 
     function misc(uint _s) public view returns (rl._misc memory m) {
-        m.daycare_days_pad = _daycare.daysPaid(_s);
+        m.daycare_days_paid = _daycare.daysPaid(_s);
     }
 
     function summoner_full(uint _s) public view returns (rl._summoner memory s) {
@@ -158,8 +158,9 @@ contract rarity_library {
         uint _total_items = _items1.balanceOf(_owner);
         items = new rl._item1[](_total_items);
         for (uint i = 0; i < _total_items; i++) {
-            (uint8 _base_type, uint8 _item_type, uint32 _crafted, uint _crafter) = _items1.items(_items1.tokenOfOwnerByIndex(_owner, i));
-            items[i] = rl._item1(_base_type, _item_type, _crafted, _crafter);
+            uint token_id = _items1.tokenOfOwnerByIndex(_owner, i);
+            (uint8 _base_type, uint8 _item_type, uint32 _crafted, uint _crafter) = _items1.items(token_id);
+            items[i] = rl._item1(token_id, _base_type, _item_type, _crafted, _crafter);
         }
     }
 }

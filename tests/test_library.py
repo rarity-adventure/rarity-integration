@@ -45,7 +45,8 @@ def test_full(lib):
 
 def test_items(lib, owner):
     items = lib.items1(owner)
-    assert items[0] == (2, 12, 1631467054, 466789)
+    assert items[0] == (36, 2, 12, 1631467054, 466789)
+    print(len(items))
 
 
 # def test_daycare(lib):

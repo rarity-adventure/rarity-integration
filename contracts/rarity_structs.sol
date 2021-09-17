@@ -65,6 +65,7 @@ library rl {
     }
 
     struct _item1 {
+        uint token_id;
         uint8 base_type;
         uint8 item_type;
         uint32 crafted;
@@ -72,7 +73,7 @@ library rl {
     }
 
     struct _misc {
-        uint daycare_days_pad;
+        uint daycare_days_paid;
     }
 
 }
