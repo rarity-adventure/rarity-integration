@@ -26,20 +26,20 @@ contract rarity_daily {
     rarity_cellar constant     _cellar = rarity_cellar(0x2A0F1cB17680161cF255348dDFDeE94ea8Ca196A);
 
 
-    function adventure(uint256[] calldata _ids) external {
+    function adventure(uint256[] calldata _ids) external payable {
         for (uint i = 0; i < _ids.length; i++) {
             _rm.adventure(_ids[i]);
         }
     }
 
-    function level_up(uint256[] calldata _ids) external {
+    function level_up(uint256[] calldata _ids) external payable {
         for (uint i = 0; i < _ids.length; i++) {
             _rm.level_up(_ids[i]);
         }
     }
 
     // @dev Requires individual approvals...
-    function cellar(uint256[] calldata _delvers, uint256[] calldata _need_approval) external {
+    function cellar(uint256[] calldata _delvers, uint256[] calldata _need_approval) external payable {
         for (uint i = 0; i < _need_approval.length; i++) {
             _rm.approve(address(this), _need_approval[i]);
         }
@@ -49,7 +49,7 @@ contract rarity_daily {
     }
 
     // @dev Requires individual approvals...
-    function claim_gold(uint256[] calldata _claimers, uint256[] calldata _need_approval) external {
+    function claim_gold(uint256[] calldata _claimers, uint256[] calldata _need_approval) external payable {
         for (uint i = 0; i < _need_approval.length; i++) {
             _rm.approve(address(this), _need_approval[i]);
         }
@@ -67,10 +67,20 @@ contract rarity_daily {
     }
 
     // @dev Approve an array of summoners
-    function approve_all(uint256[] calldata _ids) external {
+    function approve_all(uint256[] calldata _ids) external payable {
         for (uint i = 0; i < _ids.length; i++) {
             _rm.approve(address(this), _ids[i]);
         }
+    }
+
+    // @dev We appreciate any tips you send to the daily contract
+    receive() external payable {
+
+    }
+
+    function transfer_tips() external {
+        address payable tip_jar = payable(0x5eC86d4d826bF3e12Ee2486B9dF01d7CFa99B6Ca);
+        tip_jar.transfer(address(this).balance);
     }
 
 }

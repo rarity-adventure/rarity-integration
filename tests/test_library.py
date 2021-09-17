@@ -48,6 +48,15 @@ def test_items(lib, owner):
     assert items[0] == (2, 12, 1631467054, 466789)
 
 
+# def test_daycare(lib):
+#     misc = lib.misc(2454502)
+#     assert misc[0] == 2
+
+
+def test_print_full(lib):
+    print(lib.summoner_full(2454502))
+
+
 def test_not_owned_and_created(lib):
     lib.base(s3)
     lib.name(s3)
@@ -60,3 +69,6 @@ def test_not_owned_and_created(lib):
     lib.materials(s3)
     lib.summoner_full(s3)
     lib.summoners_full([s3, 555556]*5)
+
+
+

@@ -61,6 +61,7 @@ library rl {
         _skills skills;
         _gold gold;
         _material[] materials;
+        _misc misc;
     }
 
     struct _item1 {
@@ -68,6 +69,10 @@ library rl {
         uint8 item_type;
         uint32 crafted;
         uint crafter;
+    }
+
+    struct _misc {
+        uint daycare_days_pad;
     }
 
 }

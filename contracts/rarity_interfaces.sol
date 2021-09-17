@@ -76,3 +76,7 @@ interface rarity_item1 is IERC721Enumerable {
 interface rarity_names is IERC721Enumerable {
     function summoner_name(uint) external view returns (string memory);
 }
+
+interface rarity_daycare {
+    function daysPaid(uint _summoner) external view returns (uint days_paid);
+}

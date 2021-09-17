@@ -14,6 +14,7 @@ contract rarity_library {
     rarity_mat1 public         _mat1 = rarity_mat1(0x2A0F1cB17680161cF255348dDFDeE94ea8Ca196A);
     rarity_item1 public        _items1 = rarity_item1(0xf41270836dF4Db1D28F7fd0935270e3A603e78cC);
     rarity_names public        _names = rarity_names(0xc73e1237A5A9bA5B0f790B6580F32D04a727dc19);
+    rarity_daycare public        _daycare = rarity_daycare(0xf1bf34E46ECf465591B7a7fA9635E4C583174fa3);
 
     function name(uint _s) public view returns (string memory summoner_name) {
         summoner_name = _names.summoner_name(_s);
@@ -131,13 +132,18 @@ contract rarity_library {
         mats[0] = rl._material(_mat1.balanceOf(_s), _mat1.scout(_s), _mat1.adventurers_log(_s));
     }
 
+    function misc(uint _s) public view returns (rl._misc memory m) {
+        m.daycare_days_pad = _daycare.daysPaid(_s);
+    }
+
     function summoner_full(uint _s) public view returns (rl._summoner memory s) {
         s = rl._summoner(
             base(_s),
             ability_scores_full(_s),
             skills(_s),
             gold(_s),
-            materials(_s)
+            materials(_s),
+            misc(_s)
         );
     }
 
