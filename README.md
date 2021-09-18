@@ -1,6 +1,6 @@
 # Deployment Address
 
-> Library Contract: 0xa1364d81d86e88cfD018CCa4ac239A997dc96F31
+> Library Contract: 0xA4d271d3022Cf3174437cF2C159cBdBa74C4857a
 
 # Overview
 Below is a brief description of the three modules. All will be kept up-to-date with new rarity core releases.
